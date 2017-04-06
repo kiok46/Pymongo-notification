@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <section class="text-center">
+        <h4>Hey {{user_name}}!</h4>
+        <p class="info-para">Your Information has been stored in the database.</p>
+        {% if user_activated_subscription == "on" %}
+            <p class="info-para">Your Email id: {{user_email}} has been subscribed to the changes happening to mongodb.</p>
+        {% else %}
+            <p class="info-para">You are not subscribed to the changes happening to mongodb.</p>
+        {% endif %}
+    </section>
+{% endblock %}

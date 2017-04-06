@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <section class="text-center">
+        <h4>To unsubscribe please enter your email id.</h4>
+
+        <div class="col s6 m6">
+            <div class="card horizontal">
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col s8 m8">
+                                <input type="text" name="user_email" placeholder="Email id (Required)" required>
+                            </div>
+                            <div class="col s4 m4">
+                                <button class="btn center" type="submit">Unsubscribe</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+{% endblock %}
