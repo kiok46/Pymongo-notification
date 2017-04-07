@@ -10,6 +10,11 @@
     text-align: center;
 }
 
+.red {
+    color: #ff0000;
+    background-color: #fff !important;
+}
+
 .info-title{
     background-color: #26a69a;
     color: #fff;
