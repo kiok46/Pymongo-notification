@@ -25,7 +25,7 @@
                                             </div>
                                         </div>
                                         <div class="col s9 m9">
-                                            <input type="text" name="user_email" placeholder="Email id (Required)" required>
+                                            <input type="email" name="user_email" placeholder="Email id (Required)" required>
                                         </div>
                                         <div class="col s4 m4">
                                             <p style="padding-top: 20px">
@@ -36,6 +36,11 @@
                                         <div class="col s8 m8">
                                             <button class="btn center" type="submit"><i class="fa fa-check left"></i>Submit</button>
                                         </div>
+                                        {% if message %}
+                                        <div class="col s12 m12">
+                                            <h5 class="text-center red">Email already taken.</h5>
+                                        </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
