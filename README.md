@@ -26,7 +26,7 @@ sudo chmod 755 run-redis.sh (if you don't have permission to run the script.)
 
 Open Terminal 3, cd to the folder and type the following commands to run the application
 ```
-python app.py
+python3 app.py
 ```
 
 and open the browser and paste http://127.0.0.1:5000/ in the address bar.
