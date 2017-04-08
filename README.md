@@ -2,6 +2,7 @@
 Notifications from PyMongo to subscribers.
 
 ![ScreenShot](https://raw.github.com/kiok46/Pymongo-notification/master/screenshot.png)
+![ScreenShot](https://raw.github.com/kiok46/Pymongo-notification/master/screenshot2.png)
 
 ### How to run?
 
