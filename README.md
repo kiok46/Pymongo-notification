@@ -38,7 +38,7 @@ Thanks to [MLab](https://mlab.com/) which provides 500MB free data upon signup w
 ### TODO
 
  - Unsubscribe from the mails.
- - Run the method to send the mails in a task scheduler like celery.
+ - ~~Run the method to send the mails in a task scheduler like celery.~~
  - Email validation.
 
 ### LICENSE
