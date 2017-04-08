@@ -8,6 +8,7 @@ from flask import session, flash, redirect, url_for, make_response
 from flask_pymongo import PyMongo
 from flask_mail import Mail, Message
 import config_ext
+import os
 
 
 app = Flask(__name__)
@@ -76,7 +77,7 @@ def find_subscribed_users(db, *args):
 @app.route('/subscribed', methods=['GET', 'POST'])
 def subscribe():
     '''
-    Subscription.
+    Subscription to the email notifications.
     '''
     if request.method == 'POST':
         user_name = request.form['user_name']
@@ -111,7 +112,7 @@ def subscribe():
 @app.route('/unsubscribe', methods=['GET', 'POST'])
 def unsubscribe():
     '''
-    Unsubscribe.
+    Unsubscribe from the notifications.
     '''
 
     return render_template("unsubscribe.html")
