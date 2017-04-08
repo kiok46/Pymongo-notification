@@ -10,6 +10,7 @@ from flask_mail import Mail, Message
 import config_ext
 import os
 
+from celery import Celery
 
 app = Flask(__name__)
 
@@ -29,8 +30,14 @@ app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 # Thanks to the unknown spammer who told me that I added my email password. :P
 app.config['MAIL_DEFAULT_SENDER'] = 'testskuldeep@gmail.com'
 
-
 mail = Mail(app)
+
+# Celery configuration
+app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'
+app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379/0'
+
+celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
+celery.conf.update(app.config)
 
 
 @app.route('/')
@@ -50,28 +57,17 @@ def not_found(error):
     return render_template("404.html")
 
 
-def find_subscribed_users(db, *args):
+@celery.task()
+def send_async_emails(title, sender, recipients, body):
     '''
     Method finds subscribed users and sends them a mail about the
     changes in the database.
     '''
-    subscribers = db.find({"user_activated_subscription": False})
-    recipients = []
-    for s in subscribers:
-        user_info = list(s.values())
-        user_email = user_info[2]
-        recipients.append(user_email)
+    with app.app_context():
+        msg = Message(title, sender=sender,
+                      recipients=recipients, body=body)
 
-    title = "Hi subscriber user"
-    sender = 'testskuldeep@gmail.com'
-    
-    recipients.append("kuldeepbb.grewal@gmailcom")
-    body = "There was some change in the database."
-
-    msg = Message(title, sender=sender,
-                  recipients=recipients, body=body)
-
-    mail.send(msg)
+        mail.send(msg)
 
 
 @app.route('/subscribed', methods=['GET', 'POST'])
@@ -98,9 +94,23 @@ def subscribe():
                     "user_email": user_email,
                     "user_activated_subscription": user_activated_subscription
                 })
-            find_subscribed_users(db)
+
+            subscribers = db.find({"user_activated_subscription": True})
+            recipients = []
+            for s in subscribers:
+                user_info = list(s.values())
+                user_email = user_info[2]
+                recipients.append(user_email)
+
+            if recipients:
+                title = "Hi subscribed user"
+                sender = 'testskuldeep@gmail.com'
+                body = "There was a new entry in the database."
+                send_async_emails.delay(title, sender, recipients, body)
+
+            print (user_activated_subscription)
+
             return render_template("subscribed.html", user_name=user_name,
-                                   user_email=user_email,
                                    user_activated_subscription=user_activated_subscription)
         except:
             message = "Email already taken."
