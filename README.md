@@ -35,6 +35,14 @@ and open the browser and paste http://127.0.0.1:5000/ in the address bar.
 
 Thanks to [MLab](https://mlab.com/) which provides 500MB free data upon signup which is perfect for such small experimental projects.
 
+After signup mlab provides a uri to connect then add these to the config_ext.py file.
+
+```
+mongo_dbname = ""
+mongo_uri = ""
+```
+
+
 ### TODO
 
  - Unsubscribe from the mails.
